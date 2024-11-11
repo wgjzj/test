@@ -40,7 +40,7 @@ export default {
         "<span class='colorBlue'>3</span>",
         "<span class='colorYellow'>4</span>",
         "<span class='colorPink'>5</span>",
-        "<span class='colorPurple'>6</span>"
+        "<span class='colorPurple'>7</span>"
       ],
       timer: null // 用于自动切换的定时器
     };
