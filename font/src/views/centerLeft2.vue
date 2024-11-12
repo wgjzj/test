@@ -6,21 +6,18 @@
           <icon name="chart-line" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">eis轮播</span>
+          <span class="fs-xl text mx-2">轮播展示</span>
         </div>
       </div>
       <div class="d-flex jc-center body-box">
-        <!-- 轮播组件 -->
         <div class="dv-scr-board">
           <div class="carousel-wrapper">
-            <!-- 轮播项 -->
+            <!-- Display all items without hiding -->
             <div
-              class="carousel-item"
-              :class="{'current-item': currentIndex === index}"
               v-for="(item, index) in carouselItems"
               :key="index"
-            >
-              <span v-html="item"></span>
+              :class="['carousel-item', { 'active': currentIndex === index }]">
+              {{ item }}
             </div>
           </div>
         </div>
@@ -28,50 +25,44 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
-      currentIndex: 0, // 当前显示的索引
+      currentIndex: 0, // Current highlighted index
       carouselItems: [
-        "<span class='colorRed'>1</span>",
-        "<span class='colorGrass'>2</span>",
-        "<span class='colorBlue'>3</span>",
-        "<span class='colorYellow'>4</span>",
-        "<span class='colorPink'>5</span>",
-        "<span class='colorPurple'>7</span>"
+        '数据1', '数据2', '数据3', '数据4',
+        '数据5', '数据6', '数据7', '数据8'
       ],
-      timer: null // 用于自动切换的定时器
+      timer: null // Timer for automatic highlight change
     };
   },
   methods: {
-    // 启动自动轮播
+    // Start auto highlight switching
     startAutoPlay() {
       this.timer = setInterval(() => {
         this.nextItem();
-      }, 2000); // 每2秒切换一次
+      }, 2000); // Highlight changes every 2 seconds
     },
-    // 切换到下一项
     nextItem() {
       this.currentIndex = (this.currentIndex + 1) % this.carouselItems.length;
     }
   },
   mounted() {
-    this.startAutoPlay(); // 页面加载时开始自动播放
+    this.startAutoPlay(); // Start on load
   },
   beforeDestroy() {
-    clearInterval(this.timer); // 组件销毁时清除定时器
+    clearInterval(this.timer); // Clear timer on component destroy
   }
 };
 </script>
-
 <style lang="scss" scoped>
 $box-height: 410px;
 $box-width: 360px;
 $highlight-color: #37a2da;
 $bg-dark: #1a1d2e;
 $bg-light: #0f1325;
+$carousel-bg-color: #2b3a4f; // Opaque background color for the carousel items
 
 #centerRight1 {
   padding: 16px;
@@ -81,6 +72,7 @@ $bg-light: #0f1325;
   border-radius: 10px;
   background: linear-gradient(135deg, $bg-dark, $bg-light);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 3px solid $highlight-color; /* Thicker border around the container */
 
   .bg-color-black {
     height: $box-height - 30px;
@@ -104,50 +96,50 @@ $bg-light: #0f1325;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    overflow: hidden;
     padding: 10px;
+    width: 100%;
+    height: 100%;
   }
 
   .dv-scr-board {
     width: 100%;
     height: 100%;
-    max-width: 320px;
-    max-height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+    overflow: hidden;
+    border: 3px solid $highlight-color; /* Thicker border around the carousel container */
+  }
 
-    .carousel-wrapper {
-      display: flex;
-      flex-direction: column; /* 上下排列 */
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.5s ease-in-out;
-    }
+  .carousel-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
 
-    .carousel-item {
-      min-width: 100%;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: bold;
-      opacity: 0.5; /* 默认透明度较低 */
-      transition: opacity 0.5s ease-in-out;
-    }
+  .carousel-item {
+    height: 12.5%; /* Each item takes 1/8th of the container height */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $carousel-bg-color; /* Opaque background color for items */
+    color: white;
+    font-weight: bold;
+    opacity: 0.9;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle divider between items */
+  }
 
-    .current-item {
-      opacity: 1; /* 当前项完全不透明 */
-      font-size: 24px; /* 当前项字体稍大 */
-    }
+  .active {
+    background: $highlight-color; /* Highlight color for active item */
+    font-size: 18px; /* Slightly larger font for emphasis */
+    transform: scale(1.05); /* Slightly scales the active item */
+    box-shadow: 0 4px 10px rgba(55, 162, 218, 0.6); /* Subtle glow */
+    opacity: 1;
   }
 }
 </style>

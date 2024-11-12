@@ -1,5 +1,8 @@
 <template>
   <div id="index" ref="appRef">
+    <div class="top-left-title">
+      <span class="title-text">全面安全，发自内芯</span>
+    </div>
     <div class="bg">
       <dv-loading v-if="loading">Loading...</dv-loading>
       <div v-else class="host-body">
@@ -150,5 +153,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.top-left-title {
+  position: absolute;
+  top: 30px;  /* Adjust based on your desired distance from the top */
+  left: 20px; /* Adjust based on your desired distance from the left */
+  font-size: 1.5rem;  /* Adjust the font size */
+  font-weight: bold;
+  color: #37a2da;  /* Choose a color that suits your design */
+  z-index: 999;  /* Make sure it stays on top */
+}
 @import '../assets/scss/index.scss';
 </style>
