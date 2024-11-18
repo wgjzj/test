@@ -12,7 +12,7 @@
             <dv-decoration-2 :reverse="true" style="width:5px;height:6rem;" />
           </div>
         </div>
-        <!-- soc -->
+  
        
       </div>
       <div>
